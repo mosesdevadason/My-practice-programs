@@ -5,8 +5,11 @@ CFLAGS=-g -Wall
 CXXFLAGS=-std=c++11 -g -Wall
 
 EXE=hash_map_exe
-OBJ=main hash_map_ds 
-OBJS=$(addsuffix .o, $(OBJ))
+C_SOURCES=main.c
+CXX_SOURCES=hash_map_ds.cpp
+C_OBJS=main.o
+CXX_OBJS=hash_map_ds.o
+OBJS=$(C_OBJS) $(CXX_OBJS)
 
 all:
 	make compile
@@ -18,11 +21,11 @@ compile:
 $(EXE): $(OBJS)
 	$(CXX) -o $(EXE) $(OBJS)
 
-main.o: main.c
-	$(CC) $(CFLAGS) -c -o main.o main.c
+$(C_OBJS): $(C_SOURCES)
+	$(CC) $(CFLAGS) -c -o $(C_OBJS) $(C_SOURCES)
 
-hash_map_ds.o: hash_map_ds.cpp
-	$(CXX) $(CXXFLAGS) -c -o hash_map_ds.o hash_map_ds.cpp
+$(CXX_OBJS): $(CXX_SOURCES)
+	$(CXX) $(CXXFLAGS) -c -o $(CXX_OBJS) $(CXX_SOURCES)
 
 clean:
 	-rm -f $(OBJS) $(EXE)
