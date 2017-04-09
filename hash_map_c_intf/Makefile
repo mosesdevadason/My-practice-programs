@@ -4,11 +4,12 @@ CXX=g++
 CFLAGS=-g -Wall
 CXXFLAGS=-std=c++11 -g -Wall
 
-EXE=hash_map_exe
+PROGRAM=hash_map
 C_SOURCES=main.c
 CXX_SOURCES=hash_map_ds.cpp
-C_OBJS=main.o
-CXX_OBJS=hash_map_ds.o
+
+C_OBJS=$(C_SOURCES:c=o)
+CXX_OBJS=$(CXX_SOURCES:cpp=o)
 OBJS=$(C_OBJS) $(CXX_OBJS)
 
 all:
@@ -16,16 +17,10 @@ all:
 
 compile:
 	make $(OBJS)
-	make $(EXE)
+	make $(PROGRAM)
 
-$(EXE): $(OBJS)
-	$(CXX) -o $(EXE) $(OBJS)
-
-$(C_OBJS): $(C_SOURCES)
-	$(CC) $(CFLAGS) -c -o $(C_OBJS) $(C_SOURCES)
-
-$(CXX_OBJS): $(CXX_SOURCES)
-	$(CXX) $(CXXFLAGS) -c -o $(CXX_OBJS) $(CXX_SOURCES)
+$(PROGRAM): $(OBJS)
+	$(CXX) -o $(PROGRAM) $(OBJS)
 
 clean:
-	-rm -f $(OBJS) $(EXE)
+	-rm -f $(OBJS) $(PROGRAM)

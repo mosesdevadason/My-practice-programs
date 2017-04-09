@@ -4,9 +4,6 @@
 
 #include "hash_map_ds.h"
 
-extern "C"
-{
-
 handle_t unordered_hash_map_create (void)
 {
     std::unordered_map <std::string, int> *umap = 
@@ -75,4 +72,3 @@ void unordered_hash_map_dump (handle_t handle)
     printf("==========================================\n");
 }
 
-}/* extern c */
