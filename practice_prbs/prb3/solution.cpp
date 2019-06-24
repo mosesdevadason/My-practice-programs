@@ -16,38 +16,35 @@ size_t tree_height(tree_node_t *root)
             (1 + tree_height(root->right)));
 }
 
-void print_level(tree_node_t *root, size_t curr_depth, size_t req_depth)
+std::string serialize_level(tree_node_t *root, size_t curr_depth, size_t req_depth)
 {
-    if (nullptr == root) return;
+    std::string retval = "";
 
-    if (curr_depth == req_depth) std::printf("Depth %lu | Node %d\n", curr_depth,
-            root->data);
+    if (nullptr == root) return "null,";
 
-    print_level(root->left, (curr_depth + 1), req_depth);
-    print_level(root->right, (curr_depth + 1), req_depth);
+    if (curr_depth == req_depth) return std::to_string(root->data) + ",";
+
+    retval = retval +
+        serialize_level(root->left, (curr_depth + 1), req_depth);
+    retval = retval +
+        serialize_level(root->right, (curr_depth + 1), req_depth);
+
+    return retval;
 }
 
-void print_level_order(tree_node_t *root)
+std::string serialize_level_order(tree_node_t *root)
 {
-    if (nullptr == root) return;
+    std::string retval = "";
+
+    if (nullptr == root) return "null";
 
     size_t height = tree_height(root);
     for (size_t ix = 0 ; ix < height ; ++ix) {
-        print_level(root, 0 /* curr_depth */, ix /* req_depth*/);
+        retval = retval + 
+            serialize_level(root, 0 /* curr_depth */, ix /* req_depth*/);
     }
-}
 
-std::string serialize_level_wise(tree_node_t *root)
-{
-    std::string retval = "";
-    if (nullptr == root) {
-        return "null,";
-    }
-    retval = std::to_string(root->data) + ",";
-    std::printf("%s\n", retval.c_str());
-    retval = retval + serialize_level_wise(root->left);
-    retval = retval + serialize_level_wise(root->right);
-
+    if (',' == retval.at(retval.size() - 1)) retval.erase(retval.size() - 1);
     return retval;
 }
 
@@ -61,9 +58,13 @@ int main(int argc, char *argv[])
     n1->right = new tree_node_t;
     tree_node_t *n3 = n1->right;
     n3->data = 30;
+    tree_node_t *n4 = new tree_node_t;
+    n4->data = 40;
+    n3->left = n4;
 
     std::printf("Height of the tree : %lu\n", tree_height(n1));
-    print_level_order(n1);
-    std::printf("Serialized string : %s\n", serialize_level_wise(n1).c_str());
+    std::printf("Level order serialized tree : %s\n",
+            serialize_level_order(n1).c_str());
+
     return 0;
 }
