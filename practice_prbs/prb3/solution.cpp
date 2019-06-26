@@ -90,9 +90,26 @@ TreeNode * deserialize_level_order(std::string serialized_string)
      *     7. Repeat from step 4 for item in front of queue until queue is
      *        empty.
      */
-    std::queue<std::string> q;
+    std::queue<std::pair<TreeNode *, size_t>> q;
+    TreeNode *root = new TreeNode(std::stoi(items[0]));
+    q.push(std::pair<TreeNode *, size_t> (root, 0));
+
+    while (!q.empty()) {
+        int ppos = q.front().second;
+        int lpos = (2 * ppos) + 1;
+        int rpos = (2 * ppos) + 2;
+        if (lpos < items.size() && items[lpos] != "n") {
+            q.front().first->left = new TreeNode(std::stoi(items[lpos]));
+            q.push(std::pair<TreeNode *, size_t> (q.front().first->left, lpos));
+        }
+        if (rpos < items.size() && items[rpos] != "n") {
+            q.front().first->right = new TreeNode(std::stoi(items[rpos]));
+            q.push(std::pair<TreeNode *, size_t> (q.front().first->right, rpos));
+        }
+        q.pop();
+    }
     
-    return nullptr;
+    return root;
 }
 
 void print_inorder(TreeNode *root)
@@ -108,16 +125,15 @@ int main(int argc, char *argv[])
 {
     // [1,2,3,1,3,2,4] - PASS
     // [5,2,3,null,null,2,4,3,1] - FAIL
-    TreeNode *n1 = new TreeNode(1);
+    TreeNode *n1 = new TreeNode(5);
 
     TreeNode *n2 = n1->left = new TreeNode(2);
     TreeNode *n3 = n1->right = new TreeNode(3);
+    TreeNode *n4 = n3->left = new TreeNode(2);
+    TreeNode *n5 = n3->right = new TreeNode(4);
+    TreeNode *n6 = n4->left = new TreeNode(3);
+    TreeNode *n7 = n4->right = new TreeNode(1);
 
-    TreeNode *n4 = n2->left = new TreeNode(1);
-    TreeNode *n5 = n2->right = new TreeNode(3);
-
-    TreeNode *n6 = n3->left = new TreeNode(2);
-    TreeNode *n7 = n3->right = new  TreeNode(4);
 
     std::printf("Height of the tree : %lu\n", tree_height(n1));
     std::string serialized_string = serialize_level_order(n1);
