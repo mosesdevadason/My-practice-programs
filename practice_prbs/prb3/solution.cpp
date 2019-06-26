@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <string>
 #include <vector>
-#include <algorithm>
+#include <queue>
 
 struct TreeNode
 {
@@ -73,6 +73,25 @@ std::vector<std::string> split_serialized_string (std::string& serialized_str)
 
 TreeNode * deserialize_level_order(std::string serialized_string)
 {
+    if (serialized_string.length() == 0) return nullptr;
+
+    std::vector<std::string> items;
+    items = split_serialized_string(serialized_string);
+
+    /* 1. Insert first node.
+     * 2. Push node into Queue
+     * 3. For every item in front of the queue,
+     *     4. Left = 2*i + 1 and Right = 2*i + 2.
+     *     6. If left or right position is out of bounds insert whatever is
+     *        inside bounds alone.
+     *     5. Push the left and right (whatever is in-bounds) children into the
+     *        queue.
+     *     6. Delete the processed node (in front) from the queue.
+     *     7. Repeat from step 4 for item in front of queue until queue is
+     *        empty.
+     */
+    std::queue<std::string> q;
+    
     return nullptr;
 }
 
