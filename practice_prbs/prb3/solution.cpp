@@ -71,53 +71,9 @@ std::vector<std::string> split_serialized_string (std::string& serialized_str)
     return result;
 }
 
-// Requires first node alone to be created.
-void insert_nodes_from_serialized_list(
-        TreeNode *root,
-        std::vector<std::string>& nodes,
-        std::vector<std::string>::iterator start_it,
-        std::vector<std::string>::iterator end_it)
-{
-    auto it = std::find(start_it, end_it, std::to_string(root->val));
-    size_t i = it - nodes.begin();
-
-    if ((((2 * i) + 1) >= nodes.size()) || (((2 * i) + 2) >= nodes.size())) {
-        return;
-    }
-
-    size_t lpos = (2 * i) + 1;
-    size_t rpos = (2 * i) + 2;
-    std::string lchild = nodes[lpos];
-    std::string rchild = nodes[rpos];
-
-    if (lchild != "n") {
-        root->left = new TreeNode(std::stoi(lchild));
-        TreeNode *node = root->left;
-        insert_nodes_from_serialized_list(node, nodes, nodes.begin() + lpos,
-                nodes.end());
-    }
-    if (rchild != "n") {
-        root->right = new TreeNode(std::stoi(rchild));
-        TreeNode *node = root->right;
-        insert_nodes_from_serialized_list(node, nodes, nodes.begin() + rpos,
-                nodes.end());
-    }
-}
-
 TreeNode * deserialize_level_order(std::string serialized_string)
 {
-    TreeNode *root = nullptr;
-
-    if (serialized_string.length() == 0) return nullptr;
-
-    std::vector<std::string> nodes = split_serialized_string(serialized_string);
-    if (nodes.size() == 0) return nullptr;
-
-    // Create first node alone.
-    root = new TreeNode(std::stoi(nodes[0]));
-    insert_nodes_from_serialized_list(root, nodes, nodes.begin(), nodes.end());
-
-    return root;
+    return nullptr;
 }
 
 void print_inorder(TreeNode *root)
