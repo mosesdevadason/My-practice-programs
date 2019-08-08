@@ -18,14 +18,17 @@ struct trie_node_t
 void get_suggestions__(trie_node_t *root, std::string& s,
         std::vector<std::string>& suggestions)
 {
+    std::string ws = s; // working string.
+
     if (root->end_of_word) suggestions.push_back(s);
 
     if (root->ptrs.empty()) return;
 
     for (auto it = root->ptrs.begin() ; it != root->ptrs.end() ; ++it) {
-        s = s + it->second->c;
+        ws = ws + it->second->c;
         std::printf("s = %s\n", s.c_str());
-        get_suggestions__(it->second, s, suggestions);
+        get_suggestions__(it->second, ws, suggestions);
+        ws = s;
     }
 }
 
@@ -72,9 +75,8 @@ trie_node_t * trie_construct(std::vector<std::string>& dict)
 {
     trie_node_t *root = new trie_node_t('\0');
 
-    for (auto it = dict.begin() ; it != dict.end() ; ++it) {
+    for (auto it = dict.begin() ; it != dict.end() ; ++it)
         trie_insert_word(root, *it);
-    }
 
     return root;
 }
@@ -90,11 +92,16 @@ std::vector<std::string> get_suggestions_for_dict_and_query(
 
 int main(int argc, char *argv[])
 {
-    std::vector<std::string> dict = {"dog", "deal", "deer"};
-    std::string query = "de";
+    std::vector<std::string> dict = {"dog", "deal", "deer", "doom", "dome",
+        "domain", "door", "dong"};
+    std::string query = "doo";
 
     std::vector<std::string> suggestions =
         get_suggestions_for_dict_and_query(dict, query);
+
+    std::printf("Suggestions:\n");
+    for (auto it = suggestions.begin() ; it != suggestions.end() ; ++it)
+        std::printf("%s\n", it->c_str());
 
     return 0;
 }
