@@ -22,7 +22,7 @@ bool list_adds_up_to_val_check_using_hashtable(std::vector<int> &input, int k)
         return false;
     }
 
-    for (std::size_t ix = 0 ; ix < input.size() ; ++ix) {
+    for (std::size_t ix = 0; ix < input.size(); ++ix) {
         // If k - input[ix] is present in the hashmap.
         auto it = hashmap.find(k - input[ix]);
         if (it != hashmap.end()) {
@@ -48,17 +48,16 @@ bool list_adds_up_to_val_check_using_sorting(std::vector<int> &input, int k)
 
     std::sort(input.begin(), input.end());
 
-    while(left_it < right_it) {
+    while (left_it < right_it) {
         temp_sum = *left_it + *right_it;
         if (temp_sum == k) {
             std::printf("Numbers %d and %d add upto %d\n", *left_it, *right_it,
-                    k);
+                        k);
             return true;
         }
         if (temp_sum < k) {
             ++left_it;
-        }
-        else {
+        } else {
             --right_it;
         }
     }
@@ -66,8 +65,9 @@ bool list_adds_up_to_val_check_using_sorting(std::vector<int> &input, int k)
     return false;
 }
 
-static inline void print_vector(std::vector<int> &input) {
-    for(auto it = input.begin() ; it != input.end() ; ++it) {
+static inline void print_vector(std::vector<int> &input)
+{
+    for (auto it = input.begin(); it != input.end(); ++it) {
         std::printf("%d ", *it);
     }
     std::printf("\n");
@@ -91,6 +91,6 @@ int main(int argc, char *argv[])
         std::printf("Hashmap solution failed.\n");
         retval = 1;
     }
-    
+
     return retval;
 }

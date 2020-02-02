@@ -13,15 +13,15 @@
 #include <cstdio>
 #include <vector>
 
-static inline void print_vector (std::vector<int> &nums)
+static inline void print_vector(std::vector<int> &nums)
 {
-    for (auto it = nums.begin() ; it != nums.end() ; ++it) {
+    for (auto it = nums.begin(); it != nums.end(); ++it) {
         std::printf("%d ", *it);
     }
     std::printf("\n");
 }
 
-std::vector<int> product_without_self_find (std::vector<int> &nums)
+std::vector<int> product_without_self_find(std::vector<int> &nums)
 {
     std::vector<int> result;
     int prod = 0;
@@ -30,9 +30,9 @@ std::vector<int> product_without_self_find (std::vector<int> &nums)
         std::printf("nums param is of length 0\n");
         return result;
     }
-    
+
     // result[ix] will contain product of all numbers to the left of ix.
-    for (int ix = 0 ; ix < nums.size() ; ++ix) {
+    for (int ix = 0; ix < nums.size(); ++ix) {
         if (ix == 0) {
             prod = 1;
         } else {
@@ -43,7 +43,7 @@ std::vector<int> product_without_self_find (std::vector<int> &nums)
 
     // Now traversing from right, multiply result[ix] with the product of
     // elements to the right of ix.
-    for (int ix = nums.size() - 1 ; ix >= 0 ; --ix) {
+    for (int ix = nums.size() - 1; ix >= 0; --ix) {
         if (ix == (nums.size() - 1)) {
             prod = 1;
         } else {
@@ -51,7 +51,7 @@ std::vector<int> product_without_self_find (std::vector<int> &nums)
         }
         result[ix] = prod * result[ix];
     }
-    
+
     print_vector(result);
 
     return result;
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     int retval = 0;
     std::vector<int> nums = {1, 2, 3, 4, 5};
     std::vector<int> expected_result = {120, 60, 40, 30, 24};
-    
+
     print_vector(nums);
 
     std::vector<int> result = product_without_self_find(nums);

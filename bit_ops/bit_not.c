@@ -6,6 +6,6 @@ int main(int argc, char *argv[])
     int b = 0x00000003;
 
     printf("Not of a : 0x%08x\n", ((~a) & b));
-    
+
     return 0;
 }
