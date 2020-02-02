@@ -14,24 +14,28 @@ struct tree_node_t
 
 int count_unival_subtrees(tree_node_t *root)
 {
-    if (nullptr == root) return 0;
-    
+    if (nullptr == root)
+        return 0;
+
     // If leaf node.
-    if ((nullptr == root->left) && (nullptr == root->right)) return 1;
+    if ((nullptr == root->left) && (nullptr == root->right))
+        return 1;
 
     int cnt = 0;
     if (nullptr != root->left)
-        cnt = cnt +  count_unival_subtrees(root->left);
+        cnt = cnt + count_unival_subtrees(root->left);
     if (nullptr != root->right)
         cnt = cnt + count_unival_subtrees(root->right);
 
     // If current root only has left child.
-    if ((nullptr != root->left) && (nullptr == root->right) &&
-            (root->val == root->left->val)) return cnt + 1;
+    if ((nullptr != root->left) && (nullptr == root->right)
+            && (root->val == root->left->val))
+        return cnt + 1;
     // If current root only has right child.
-    else if ((nullptr != root->right) && (nullptr == root->left) &&
-            (root->val == root->right->val)) return cnt + 1;
-    
+    else if ((nullptr != root->right) && (nullptr == root->left)
+            && (root->val == root->right->val))
+        return cnt + 1;
+
     // Current root has both left and right children.
     else if ((root->val == root->left->val) && (root->val == root->right->val))
         return cnt + 1;

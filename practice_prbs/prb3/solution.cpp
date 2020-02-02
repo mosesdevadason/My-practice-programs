@@ -8,15 +8,19 @@ struct TreeNode
     int val;
     TreeNode *left;
     TreeNode *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr)
+    {
+    }
 };
 
 std::string serialize_level_order(TreeNode *root)
 {
-    if (nullptr == root) {return "";}
+    if (nullptr == root) {
+        return "";
+    }
 
     std::string ser_str = "";
-    std::queue<TreeNode *> q;
+    std::queue<TreeNode*> q;
 
     q.push(root);
     while (!q.empty()) {
@@ -40,16 +44,18 @@ std::string serialize_level_order(TreeNode *root)
     return ser_str;
 }
 
-TreeNode * deserialize_level_order(std::string& serialized_str)
+TreeNode* deserialize_level_order(std::string &serialized_str)
 {
-    if (0 == serialized_str.length()) {return nullptr;}
+    if (0 == serialized_str.length()) {
+        return nullptr;
+    }
 
     std::istringstream ser_stream(serialized_str);
     std::string token = "";
 
     ser_stream >> token;
     TreeNode *root = new TreeNode(std::stoi(token));
-    std::queue<TreeNode *> q;
+    std::queue<TreeNode*> q;
     q.push(root);
     while (!q.empty()) {
         // Left child.
@@ -72,7 +78,8 @@ TreeNode * deserialize_level_order(std::string& serialized_str)
 
 void print_inorder(TreeNode *root)
 {
-    if (nullptr == root) return;
+    if (nullptr == root)
+        return;
 
     print_inorder(root->left);
     std::printf("INORDER NODE DATA : %d\n", root->val);
@@ -91,10 +98,8 @@ int main(int argc, char *argv[])
     TreeNode *n6 = n4->left = new TreeNode(3);
     TreeNode *n7 = n4->right = new TreeNode(1);
 
-
     std::string serialized_str = serialize_level_order(n1);
-    std::printf("Level order serialized tree : %s\n",
-            serialized_str.c_str());
+    std::printf("Level order serialized tree : %s\n", serialized_str.c_str());
     TreeNode *root = deserialize_level_order(serialized_str);
     print_inorder(root);
 

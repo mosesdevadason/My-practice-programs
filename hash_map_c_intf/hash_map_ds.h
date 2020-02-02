@@ -7,14 +7,14 @@ extern "C"
 #endif
 
 /* Pointer to the hash map. Will be used for all operations after creating it */
-typedef void * handle_t;
+typedef void *handle_t;
 
 /* Creates the hash map and returns the handle to be used for future operations 
  */
 handle_t unordered_hash_map_create(void);
 
 /* Inserts element ir. key, value pair into the hash map */
-void unordered_hash_map_element_insert(const char *key, int value, 
+void unordered_hash_map_element_insert(const char *key, int value,
                                        handle_t handle);
 
 /* Finds the value corresponding to the input key */
